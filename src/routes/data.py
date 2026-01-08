@@ -48,7 +48,7 @@ async def upload_data(request: Request, project_id: int, file: UploadFile = File
             }
         )
 
-    project_dir_path = ProjectController().get_project_path(project_id=project_id)
+    # project_dir_path = ProjectController().get_project_path(project_id=project_id)
     file_path, file_id = data_controller.generate_unique_filepath(
         orig_file_name=file.filename,
         project_id=project_id
@@ -169,10 +169,10 @@ async def process_endpoint(request: Request, project_id: int, process_request: P
         
         collection_name = nlp_controller.create_collection_nmae(project_id=project_id)
         
-        _ = await nlp_controller.vectordb_client.delete_collection(collection_name=collection_name)
+        _ = await nlp_controller.vectordb_client.delete_collection(collection_name=collection_name) # delete the vecto
         
-        _ = await chunk_model.delete_chunks_by_project_id(
-            project_id=project.project_id
+        _ = await chunk_model.delete_chunks_by_project_id( # delete the row contains this asset info
+            project_id=project.project_id 
         )
 
     for asset_id, file_id in project_files_ids.items():

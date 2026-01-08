@@ -20,11 +20,9 @@ class ProjectModel(BaseDataModel):
         async with self.db_client() as session:
             async with session.begin():
                 session.add(project)
-            await session.commit()
             await session.refresh(project)
         return project
     
-
 
     async def get_project_or_create_one(self, project_id: str):
 

@@ -2,7 +2,7 @@ import os
 
 class TempelateParser:
     def __init__(self, language: str, default_language: str = "en"):
-        self.current_path = os.path.dirname(os.path.abspath(__file__))
+        self.current_path = os.path.dirname(os.path.abspath(__file__)) # templates_folder
         self.default_language = default_language
         self.language = None
         

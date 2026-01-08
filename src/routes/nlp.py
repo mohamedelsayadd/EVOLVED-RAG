@@ -125,7 +125,6 @@ async def get_project_index_info(request:Request,project_id:int,search_request:S
         request.app.db_client
     )
     
-    
     project = await project_model.get_project_or_create_one(project_id=project_id)
     
     nlp_controller = NLPController(
@@ -162,7 +161,6 @@ async def answer_rag(request:Request,project_id:int,search_request:SearchRequest
         request.app.db_client
     )
     
-    
     project = await project_model.get_project_or_create_one(project_id=project_id)
     
     nlp_controller = NLPController(
@@ -173,8 +171,9 @@ async def answer_rag(request:Request,project_id:int,search_request:SearchRequest
     )
     
     answer,full_prompt,chat_histor = await nlp_controller.answer_rag_question(
-        project=project,query=search_request.text,limit=5
+        project=project,query=search_request.text,limit=search_request.limit
     )
+    
     
     if not answer:
         return JSONResponse(

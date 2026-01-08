@@ -16,6 +16,7 @@ async def lifespan(app:FastAPI):
     
     settings = get_settings()
     
+                            #postgresql+asyncpg://username:password@host:port/database
     postgres_connection = f"postgresql+asyncpg://{settings.POSTGRES_USERNAME}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_MAIN_DATABASE}"
     app.db_engine = create_async_engine(url=postgres_connection)
     app.db_client = sessionmaker(
@@ -41,7 +42,7 @@ async def lifespan(app:FastAPI):
     app.template_parser = TempelateParser(language=settings.PRIMARY_LANG,default_language=settings.DEFAULT_LANG)
     
     yield 
-    app.db_engine.dispose()
+    await app.db_engine.dispose()
     await app.vectordb_client.disconnect()
 
 

@@ -1,84 +1,142 @@
-# mini-rag
+# Mini-RAG
 
-This is a minimal implementation of the RAG model for question answering.
+A production-ready, scalable, and modular Retrieval-Augmented Generation (RAG) system built with FastAPI. This project provides a robust foundation for building question-answering applications with support for multiple LLM providers, efficient vector search, and comprehensive system monitoring.
 
-## The Course
+> [!NOTE]
+> **Acknowledgements**: This project is based on the **mini-RAG tutorial on YouTube**. A special thanks to **Eng. Abo Bakr Soliman** for the comprehensive guide and architectural insights.
 
-This is an educational project where all of the codes where explained (step by step) via a set of `Arabic` youtube videos. Please check the list:
+## 🚀 Features
 
-| # | Title                                    | Link                                                                                                 | Codes                                              |
-|---|------------------------------------------|------------------------------------------------------------------------------------------------------|----------------------------------------------------|
-| 1 | About the Course ماذا ولمـــاذا          | [Video](https://www.youtube.com/watch?v=Vv6e2Rb1Q6w&list=PLvLvlVqNQGHCUR2p0b8a0QpVjDUg50wQj)         | NA                                                 |
-| 2 | What will we build ماذا سنبنى في المشروع | [Video](https://www.youtube.com/watch?v=_l5S5CdxE-Q&list=PLvLvlVqNQGHCUR2p0b8a0QpVjDUg50wQj&index=2) | NA                                                 |
-| 3 | Setup your tools الأدوات الأساسية        | [Video](https://www.youtube.com/watch?v=VSFbkFRAT4w&list=PLvLvlVqNQGHCUR2p0b8a0QpVjDUg50wQj&index=3) | NA                                                 |
-| 4 | Project Architecture                     | [Video](https://www.youtube.com/watch?v=Ei_nBwBbFUQ&list=PLvLvlVqNQGHCUR2p0b8a0QpVjDUg50wQj&index=4) | [branch](https://github.com/bakrianoo/mini-rag/tree/tut-001) |
-| 5 | Welcome to FastAPI                       | [Video](https://www.youtube.com/watch?v=cpOuCdzN_Mo&list=PLvLvlVqNQGHCUR2p0b8a0QpVjDUg50wQj&index=5) | [branch](https://github.com/bakrianoo/mini-rag/tree/tut-002) |
-| 6 | Nested Routes + Env Values               | [Video](https://www.youtube.com/watch?v=CrR2Bz2Y7Hw&list=PLvLvlVqNQGHCUR2p0b8a0QpVjDUg50wQj&index=6) | [branch](https://github.com/bakrianoo/mini-rag/tree/tut-003) |
-| 7 | Uploading a File                         | [Video](https://www.youtube.com/watch?v=5alMKCbFqWs&list=PLvLvlVqNQGHCUR2p0b8a0QpVjDUg50wQj&index=7) | [branch](https://github.com/bakrianoo/mini-rag/tree/tut-004) |
+- **Multi-LLM Support**: Seamlessly switch between **Google Gemini**, **OpenAI**, and **Cohere** for both text generation and embedding models.
+- **Document Processing**: Robust support for parsing and chunking **PDF** and **Text** files.
+- **Vector Database**: Integrated with **Qdrant** for high-performance vector similarity search (with support for **Pgvector**).
+- **Production-Ready Monitoring**: Full observability stack included:
+  - **Prometheus**: Metric collection for system performance and application Latency.
+  - **Grafana**: Pre-configured dashboards for visualizing system health, request rates, and LLM performance.
+  - **Node/Postgres Exporters**: Detailed hardware and database metrics.
+- **Containerized**: Fully Dockerized application for consistent deployment environments.
+- **RESTful API**: Clean and documented API endpoints built with FastAPI.
 
+## 📂 Project Structure
 
+The project follows a clean, modular architecture:
 
-
-## Requirements
-
-- Python 3.8 or later
-
-#### Install Python using MiniConda
-
-1) Download and install MiniConda from [here](https://docs.anaconda.com/free/miniconda/#quick-command-line-install)
-2) Create a new environment using the following command:
-```bash
-$ conda create -n mini-rag python=3.8
-```
-3) Activate the environment:
-```bash
-$ conda activate mini-rag
-```
-
-### (Optional) Setup you command line interface for better readability
-
-```bash
-export PS1="\[\033[01;32m\]\u@\h:\w\n\[\033[00m\]\$ "
+```text
+mini-rag/
+├── docker/             # Docker configuration and environment variables
+├── src/
+│   ├── controllers/    # Business logic and request handlers
+│   ├── models/         # Pydantic models and Database schemas
+│   ├── routes/         # API endpoint definitions
+│   ├── stores/         # Data access layer (Vector DB, Document interactions)
+│   ├── utils/          # Utility functions and helpers
+│   └── main.py         # Application entry point
+├── tests/              # Test suite
+├── .env.example        # Example environment variables
+├── pyproject.toml      # Python dependencies and project config
+└── README.md           # Project documentation
 ```
 
-## Installation
+## 🛠️ Tech Stack
 
-### Install the required packages
+- **Backend**: Python 3.10+, FastAPI, SQLAlchemy, LangChain
+- **Vector Database**: Qdrant, Pgvector
+- **NoSQL Database**: MongoDB (via Motor)
+- **Relational Database**: PostgreSQL
+- **LLM Integration**:
+  - Google Generative AI (Gemini)
+  - OpenAI
+  - Cohere
+- **Infrastructure**: Docker, Docker Compose
+- **Monitoring**: Prometheus, Grafana, Node Exporter
 
+## 📋 Prerequisites
+
+- [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/)
+- Python 3.10+ (for local development)
+
+## ⚡ Quick Start
+
+### 1. Clone the Repository
 ```bash
-$ pip install -r requirements.txt
+git clone https://github.com/bakrianoo/mini-rag.git
+cd mini-rag
 ```
 
-### Setup the environment variables
+### 2. Configure Environment Variables
+Copy the example environment file and configure your API keys.
 
 ```bash
-$ cp .env.example .env
+cd docker
+cp env/.env.app.example env/.env.app
+# also configure other env files if needed (postgres, grafana)
 ```
 
-Set your environment variables in the `.env` file. Like `OPENAI_API_KEY` value.
+Edit `env/.env.app` to set your preferences. **Crucially**, add your API keys:
 
-## Run Docker Compose Services
+```ini
+# Choose your backend (GEMINI, OPENAI, COHERE)
+GENERATION_BACKEND="GEMINI"
+EMBEDDING_BACKEND="COHERE"
+
+# API Keys
+GEMINI_API_KEY="your_gemini_key_here"
+OPENAI_API_KEY="your_openai_key_here"
+COHERE_API_KEY="your_cohere_key_here"
+
+# Model Selection
+GENERATION_MODEL_ID="gemini-1.5-flash"
+EMBEDDING_MODEL_ID="embed-multilingual-v3.0"
+```
+
+### 3. Run with Docker Compose
+Start the entire stack (App, DBs, Monitoring) with a single command:
 
 ```bash
-$ cd docker
-$ cp .env.example .env
+sudo docker compose up -d --build
 ```
 
-- update `.env` with your credentials
+The services will be available at:
+- **API (FastAPI)**: `http://localhost:8000` (Docs at `/docs`)
+- **Grafana**: `http://localhost:3000`
+- **Prometheus**: `http://localhost:9090`
+- **Qdrant UI**: `http://localhost:6333/dashboard`
 
+## 🔌 API Usage
 
+You can explore the interactive API documentation at `http://localhost:8000/docs`.
 
-```bash
-$ cd docker
-$ sudo docker compose up -d
-```
+### Common Workflows
 
-## Run the FastAPI server
+1.  **Upload Documents**:
+    ```http
+    POST /data/upload/{project_id}
+    Content-Type: multipart/form-data
+    file=@/path/to/your/document.pdf
+    ```
 
-```bash
-$ uvicorn main:app --reload --host 0.0.0.0 --port 5000
-```
+2.  **Process Documents (Chunking & Embedding)**:
+    ```http
+    POST /data/process/{project_id}
+    ```
 
-## POSTMAN Collection
+3.  **Ask a Question**:
+    ```http
+    POST /nlp/answer/{project_id}
+    Content-Type: application/json
 
-Download the POSTMAN collection from [/assets/mini-rag-app.postman_collection.json](/assets/mini-rag-app.postman_collection.json)
+    {
+      "question": "What does the document say about feature X?"
+    }
+    ```
+
+## 📊 Monitoring
+
+The system comes with a pre-configured monitoring stack.
+- Access **Grafana** at `http://localhost:3000`.
+- Login with default credentials (check `docker/env/.env.grafana` or default `admin`/`admin`).
+- View dashboards for API latency, Request counts, and System resource usage.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.

@@ -61,8 +61,6 @@ class QdrantDBProvider(VectorDBInterface):
         )
         else:
             return False
-        
-    
     
     async def insert_one(self, collection_name: str, text: str, vector: list,
                          metadata: dict = None, 

@@ -80,6 +80,7 @@ class NLPController(BaseController):
         return results
     
     async def answer_rag_question(self,project:Project,query:str,limit:int = 5):
+        
         retreived_documents = await self.search_vector_db_collection(
             project=project,
             text=query,
