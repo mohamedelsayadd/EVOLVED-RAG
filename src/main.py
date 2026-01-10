@@ -8,6 +8,7 @@ from stores.llm.templates_folder.template_parser import TempelateParser
 from sqlalchemy.ext.asyncio import create_async_engine,AsyncSession
 from sqlalchemy.orm import sessionmaker
 from utils.metrics import setup_metrics
+from utils.limiter import SlidingWindowLogLimiter
 
 
 
@@ -40,6 +41,9 @@ async def lifespan(app:FastAPI):
     await app.vectordb_client.connect()
     
     app.template_parser = TempelateParser(language=settings.PRIMARY_LANG,default_language=settings.DEFAULT_LANG)
+    
+    app.limiter = SlidingWindowLogLimiter(limit=5,window_seconds=60)
+    await app.limiter.connect()
     
     yield 
     await app.db_engine.dispose()

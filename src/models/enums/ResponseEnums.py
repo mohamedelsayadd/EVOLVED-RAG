@@ -19,3 +19,4 @@ class ResponseSignal(Enum):
     VECTORDB_SEARCH_SUCCESS = "vectordb search success"
     RAG_ANSWER_ERROR = "LLM Can't Generate Answer"
     RAG_ANSWER_SUCCESS = "LLM Generation Success"
+    LIMIT_EXCEEDED = "Please try again Latter"

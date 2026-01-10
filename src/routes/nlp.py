@@ -157,6 +157,12 @@ async def get_project_index_info(request:Request,project_id:int,search_request:S
 @nlp_router.post("/index/answer/{project_id}")
 async def answer_rag(request:Request,project_id:int,search_request:SearchRequest):
     
+    if not request.app.limiter.is_allowed(request.client.host):
+        return JSONResponse(
+            content=ResponseSignal.LIMIT_EXCEEDED,
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS
+        )
+    
     project_model = await ProjectModel.create_instance(
         request.app.db_client
     )
