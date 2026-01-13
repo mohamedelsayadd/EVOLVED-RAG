@@ -1,9 +1,10 @@
-# Mini-RAG
+# EVOLVED RAG
 
 A production-ready, scalable, and modular Retrieval-Augmented Generation (RAG) system built with FastAPI. This project provides a robust foundation for building question-answering applications with support for multiple LLM providers, efficient vector search, and comprehensive system monitoring.
+This project is the extended Version of EVOLVED RAG Project, whit Extra Features.
 
 > [!NOTE]
-> **Acknowledgements**: This project is based on the **mini-RAG tutorial on YouTube**. A special thanks to **Eng. Abo Bakr Soliman** for the comprehensive guide and architectural insights.
+> **Acknowledgements**: This project is based on the **EVOLVED RAG tutorial on YouTube**. A special thanks to **Eng. Abo Bakr Soliman** for the comprehensive guide and architectural insights.
 
 ## 🚀 Features
 
@@ -22,7 +23,7 @@ A production-ready, scalable, and modular Retrieval-Augmented Generation (RAG) s
 The project follows a clean, modular architecture:
 
 ```text
-mini-rag/
+EVOLVED RAG/
 ├── docker/             # Docker configuration and environment variables
 ├── src/
 │   ├── controllers/    # Business logic and request handlers
@@ -59,8 +60,8 @@ mini-rag/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/bakrianoo/mini-rag.git
-cd mini-rag
+git clone https://github.com/bakrianoo/EVOLVED RAG.git
+cd EVOLVED RAG
 ```
 
 ### 2. Configure Environment Variables

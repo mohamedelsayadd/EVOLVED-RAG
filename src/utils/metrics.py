@@ -21,7 +21,7 @@ class PrometheusMiddleware(BaseHTTPMiddleware):
 
         REQUEST_COUNT.labels(
                             method=request.method,
-                            endpoint=endpoint, status=str(response.status_code)).inc()
+                            endpoint=endpoint, status=str(response.status_code))
 
         REQUEST_COUNT.labels(method=request.method, endpoint=endpoint, status=response.status_code).inc()
 
