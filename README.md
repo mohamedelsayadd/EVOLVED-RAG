@@ -4,7 +4,7 @@ A production-ready, scalable, and modular Retrieval-Augmented Generation (RAG) s
 This project is the extended Version of EVOLVED RAG Project, whit Extra Features.
 
 > [!NOTE]
-> **Acknowledgements**: This project is based on the **EVOLVED RAG tutorial on YouTube**. A special thanks to **Eng. Abo Bakr Soliman** for the comprehensive guide and architectural insights.
+> **Acknowledgements**: This project is based on the **mini RAG tutorial on YouTube**. A special thanks to **Eng. Abo Bakr Soliman** for the comprehensive guide and architectural insights.
 
 ## 🚀 Features
 
